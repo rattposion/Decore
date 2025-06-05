@@ -32,6 +32,24 @@ const DataEntryPanel: React.FC<DataEntryPanelProps> = ({ onBack }) => {
   };
 
   const handleSave = () => {
+    // Validação dos campos obrigatórios
+    const hasV1 = reportData.morning.some(c => Number(c.cleaned) > 0);
+    const hasV9 = reportData.afternoon.some(c => Number(c.v9) > 0);
+    if (!hasV1 || !hasV9) {
+      toast.error('Preencha pelo menos um valor em "Limpos" (manhã) para 670L V1 e um valor em "670L V9" (tarde) para salvar o relatório.', {
+        duration: 4000,
+        position: 'top-right',
+        style: {
+          background: '#ef4444',
+          color: '#fff',
+          borderRadius: '8px',
+          padding: '16px',
+          fontSize: '15px',
+          fontWeight: '600'
+        }
+      });
+      return;
+    }
     saveToHistory();
     toast.success('Relatório salvo com sucesso!', {
       duration: 3000,
