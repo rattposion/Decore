@@ -6,6 +6,7 @@ export interface Collaborator {
   tested: number;
   cleaned: number;
   resetados: number;
+  v9: number;
 }
 
 export interface ReportData {
@@ -26,6 +27,7 @@ export interface ReportData {
     testedEquipment: number;
     cleanedEquipment: number;
     resetEquipment: number;
+    v9Equipment: number;
     totalCollaborators: number;
     morningCollaborators: number;
     afternoonCollaborators: number;
@@ -36,7 +38,8 @@ const emptyCollaborator = (): Collaborator => ({
   name: '',
   tested: 0,
   cleaned: 0,
-  resetados: 0
+  resetados: 0,
+  v9: 0
 });
 
 const initialReportData: ReportData = {
@@ -57,6 +60,7 @@ const initialReportData: ReportData = {
     testedEquipment: 0,
     cleanedEquipment: 0,
     resetEquipment: 0,
+    v9Equipment: 0,
     totalCollaborators: 0,
     morningCollaborators: 0,
     afternoonCollaborators: 0

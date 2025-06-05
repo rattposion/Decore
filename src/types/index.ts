@@ -3,6 +3,7 @@ export interface Collaborator {
   tested: number;
   cleaned: number;
   resetados: number;
+  v9: number;
 }
 
 export interface Observations {
@@ -22,6 +23,7 @@ export interface Summary {
   testedEquipment: number;
   cleanedEquipment: number;
   resetEquipment: number;
+  v9Equipment: number;
   totalCollaborators: number;
   morningCollaborators: number;
   afternoonCollaborators: number;

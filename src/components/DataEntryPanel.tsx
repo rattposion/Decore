@@ -100,9 +100,10 @@ const DataEntryPanel: React.FC<DataEntryPanelProps> = ({ onBack }) => {
           <thead>
             <tr className="border-b border-gray-200">
               <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">Nome</th>
-              <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">Testados</th>
-              <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">Limpos</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">670L V1</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">670L V9</th>
               <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">Resetados</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">Limpos</th>
               <th className="px-4 py-3 text-right text-sm font-medium text-gray-500">Ações</th>
             </tr>
           </thead>
@@ -130,8 +131,8 @@ const DataEntryPanel: React.FC<DataEntryPanelProps> = ({ onBack }) => {
                 <td className="px-4 py-3">
                   <input
                     type="number"
-                    value={collaborator.cleaned}
-                    onChange={(e) => updateCollaborator(period, index, 'cleaned', Number(e.target.value))}
+                    value={collaborator.v9 || 0}
+                    onChange={(e) => updateCollaborator(period, index, 'v9', Number(e.target.value))}
                     min="0"
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
@@ -141,6 +142,15 @@ const DataEntryPanel: React.FC<DataEntryPanelProps> = ({ onBack }) => {
                     type="number"
                     value={collaborator.resetados}
                     onChange={(e) => updateCollaborator(period, index, 'resetados', Number(e.target.value))}
+                    min="0"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </td>
+                <td className="px-4 py-3">
+                  <input
+                    type="number"
+                    value={collaborator.cleaned}
+                    onChange={(e) => updateCollaborator(period, index, 'cleaned', Number(e.target.value))}
                     min="0"
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />

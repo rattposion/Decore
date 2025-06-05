@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { ReportDataProvider, useReportData } from './hooks/useReportData';
 import DataEntryPanel from './components/DataEntryPanel';
 import ReportDisplay from './components/ReportDisplay';
+import EquipmentExitForm from './components/EquipmentExitForm';
+import ExitReports from './components/ExitReports';
 import { exportToPDF } from './utils/pdfUtils';
 import { saveReportsToFiles, loadReportsFromFiles } from './utils/fileUtils';
 import MainLayout from './components/MainLayout';
@@ -13,6 +15,8 @@ import { UserCircle, Download, Upload, FolderOpen } from 'lucide-react';
 function App() {
   const [showDataEntry, setShowDataEntry] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+  const [showEquipmentExit, setShowEquipmentExit] = useState(false);
+  const [showExitReports, setShowExitReports] = useState(false);
   const [filterDate, setFilterDate] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
   const { reportData, getHistory, loadFromHistory, saveToHistory, setReportData } = useReportData();
@@ -107,10 +111,21 @@ function App() {
       if (file) {
         try {
           await loadReportsFromFiles(file);
-          toast.success('Relatórios restaurados com sucesso!');
-          window.location.reload(); // Recarrega a página para atualizar os dados
+          toast.success('Backup restaurado! Todos os relatórios, saídas e produção foram atualizados.', {
+            duration: 4000,
+            position: 'top-right',
+            style: {
+              background: '#2563eb',
+              color: '#fff',
+              borderRadius: '8px',
+              padding: '16px',
+              fontSize: '15px',
+              fontWeight: '600'
+            }
+          });
+          setTimeout(() => window.location.reload(), 800);
         } catch (error) {
-          toast.error('Erro ao restaurar relatórios');
+          toast.error('Erro ao restaurar backup');
         }
       }
     };
@@ -172,19 +187,15 @@ function App() {
               <Button variant="success" onClick={() => setShowDataEntry(true)}>
                 Preencher Relatório
               </Button>
-              <Button variant="primary" className="bg-purple-500 hover:bg-purple-600" onClick={handleExport}>
-                Exportar PDF
+              <Button variant="primary" className="bg-red-500 hover:bg-red-600" onClick={() => setShowEquipmentExit(true)}>
+                Saída de Equipamentos
               </Button>
-              <Button variant="warning" onClick={handleSave}>
-                Salvar
+              <Button variant="primary" className="bg-orange-500 hover:bg-orange-600" onClick={() => setShowExitReports(true)}>
+                Relatórios de Saídas
               </Button>
               <Button variant="primary" className="bg-green-500 hover:bg-green-600" onClick={handleBackup}>
                 <Download className="w-4 h-4 mr-2" />
                 Backup
-              </Button>
-              <Button variant="primary" className="bg-blue-500 hover:bg-blue-600" onClick={handleRestore}>
-                <Upload className="w-4 h-4 mr-2" />
-                Restaurar
               </Button>
               <Button variant="primary" className="bg-indigo-500 hover:bg-indigo-600" onClick={handleLoadBackup}>
                 <FolderOpen className="w-4 h-4 mr-2" />
@@ -201,6 +212,13 @@ function App() {
         <div id="report-content">
           {showDataEntry ? (
             <DataEntryPanel onBack={() => setShowDataEntry(false)} />
+          ) : showEquipmentExit ? (
+            <EquipmentExitForm onBack={() => {
+              setShowEquipmentExit(false);
+              setShowExitReports(true);
+            }} />
+          ) : showExitReports ? (
+            <ExitReports onBack={() => setShowExitReports(false)} />
           ) : (
             <ReportDisplay />
           )}
