@@ -120,7 +120,7 @@ const ReportDisplay: React.FC = () => {
             <div className="flex flex-col gap-2 md:gap-4">
               <div className="bg-white/80 rounded-xl p-3 md:p-4 shadow-inner flex flex-col items-center">
                 <span className="text-xs md:text-sm text-gray-500">670L V1</span>
-                <span className="text-2xl md:text-3xl font-extrabold text-blue-700 mt-1">{reportData.morning.reduce((sum, c) => sum + c.cleaned, 0)}</span>
+                <span className="text-2xl md:text-3xl font-extrabold text-blue-700 mt-1">{reportData.morning.reduce((sum, c) => sum + (c.tested || 0), 0)}</span>
               </div>
               <div className="bg-white/80 rounded-xl p-3 md:p-4 shadow-inner flex flex-col items-center">
                 <span className="text-xs md:text-sm text-gray-500">670L V9</span>
