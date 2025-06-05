@@ -13,7 +13,7 @@ const EquipmentExitForm: React.FC<EquipmentExitFormProps> = ({ onBack }) => {
   const { reportData, setReportData } = useReportData();
   
   // Calcular equipamentos disponíveis
-  const availableV1 = reportData.morning.reduce((sum, c) => sum + c.cleaned, 0);
+  const availableV1 = reportData.morning.reduce((sum, c) => sum + (c.tested || 0), 0);
   const availableV9 = reportData.afternoon.reduce((sum, c) => sum + (c.v9 || 0), 0);
 
   const [exitData, setExitData] = useState({
@@ -40,12 +40,12 @@ const EquipmentExitForm: React.FC<EquipmentExitFormProps> = ({ onBack }) => {
     // Atualizar o relatório com as saídas
     const updatedMorning = reportData.morning.map(collab => ({
       ...collab,
-      cleaned: Math.max(0, collab.cleaned - exitData.v1Quantity)
+      tested: Math.max(0, (collab.tested || 0) - exitData.v1Quantity)
     }));
 
     const updatedAfternoon = reportData.afternoon.map(collab => ({
       ...collab,
-      resetados: Math.max(0, collab.resetados - exitData.v9Quantity)
+      v9: Math.max(0, (collab.v9 || 0) - exitData.v9Quantity)
     }));
 
     setReportData(prev => ({
